@@ -30,37 +30,11 @@ public class BinChasmsCodec {
     private static int CHARS = gsmChars.length();//should be 125
     private static BigInteger CHARS_BI = BigInteger.valueOf(CHARS);
 
-
-    public static int calculateBytesThatCanFit(int numberOfSymbols, int uniqueSymbols) {
-        //System.out.println("chars:"+CHARS);
-        BigInteger combosOfChars = BigInteger.valueOf(uniqueSymbols).pow(numberOfSymbols);
-        BigInteger n256 = BigInteger.valueOf(256);
-        //combinationsOf140Bytes = combinationsOf140Bytes.pow(140);
-        int bytesThatFit = -1;
-        for(int i = 1; i < Integer.MAX_VALUE; i++) {
-            BigInteger combosOfNBytes = n256.pow(i);
-            if(combosOfNBytes.compareTo(combosOfChars) > 0) {
-                bytesThatFit = i-1;
-                //the previous power was the last & highest one to be less, therefore fit
-                System.out.println("number of full bytes that can be expressed by "+numberOfSymbols
-                        +" consecutive symbols with "+uniqueSymbols+" possible values: "+bytesThatFit);
-                System.out.println("256^"+bytesThatFit+": "+combosOfNBytes);
-                System.out.println(uniqueSymbols+"^"+numberOfSymbols+": "+combosOfChars);
-
-                System.out.println("diff:    "+combosOfChars.subtract(combosOfNBytes));
-                break;
-            }
-        }
-        return bytesThatFit;
-    }
-        
-        //the results are: we can represent 139 bytes using 160 characters in an sms,
-            // where we only use the printable subset of 125 values
-        
-        //System.out.println("combinations of 140 bytes:"+combinationsOf140Bytes);
-        
-        //reserve 4 bytes for header: centiseconds (1 centisecond = 10 milliseconds) since sender started sending
-
+    //the results are: we can represent 139 bytes using 160 characters in an sms,
+        // where we only use the printable subset of 125 values
+    //System.out.println("combinations of 140 bytes:"+combinationsOf140Bytes);
+    //reserve 4 bytes for header: centiseconds since sender started sending
+    //(1 centisecond = 10 milliseconds)
          
     public static String encode(byte[] packet) throws IllegalArgumentException {
         check(packet.length <= (BYTES_PER_TEXT - HEADER_SIZE),
@@ -119,7 +93,7 @@ public class BinChasmsCodec {
         }
         System.out.println("string into a number:   "+asNumber);
         return asNumber.toByteArray();
-        //fixme:any leading zero-bytes are omitted. we can't just pad the bytes with zeroes,
+        //fixme:any leading zero-bytes are omitted. We can't just pad the bytes with zeroes,
         //because we don't know how long the original was (<=139 bytes)
         //byte[] bytes = asNumber.toByteArray();
         //check(bytes.length <= )

@@ -10,6 +10,8 @@ import java.util.Arrays;
 
 import static com.medavox.smsforwarder.BinChasmsCodec.*;
 import com.medavox.util.io.Bytes;
+import com.medavox.util.io.BytesAsUInt;
+
 import static com.medavox.util.io.Bytes.bytesToHex;
 
 import static com.medavox.util.validate.Validator.check;
@@ -65,6 +67,55 @@ public class BinChasmsCodecTests {
 
         }
     }*/
+
+    @Test
+    public void test_add() {
+        byte[] a = byteArrayOf(255, 0, 0, 0);
+        System.out.println("a:"+bytesToHex(a));
+        byte[] b = byteArrayOf(255, 0, 0, 0);
+        System.out.println("b:"+bytesToHex(b));
+        byte[] expected = byteArrayOf(254, 1, 0, 0);
+        System.out.println("expected:"+bytesToHex(expected));
+
+        byte[] result = BytesAsUInt.add(a, b);
+        Assert.assertTrue("expected:"+bytesToHex(expected)+"; result:"+bytesToHex(result),
+                Arrays.equals(expected, result));
+    }
+
+    @Test
+    public void test_divide() {
+        byte[] a = byteArrayOf(255, 0, 0, 0);
+        System.out.println("a:"+bytesToHex(a));
+        byte[] b = byteArrayOf(255, 0, 0, 0);
+        System.out.println("b:"+bytesToHex(b));
+        byte[] expected = byteArrayOf(254, 1, 0, 0);
+        System.out.println("expected:"+bytesToHex(expected));
+
+        byte[] result = BytesAsUInt.add(a, b);
+        Assert.assertTrue("expected:"+bytesToHex(expected)+"; result:"+bytesToHex(result),
+                Arrays.equals(expected, result));
+    }
+
+    @Test
+    public void test_subtract() {
+        byte[] a = byteArrayOf(2, 0, 0, 2);
+        System.out.println("a:"+bytesToHex(a));
+        byte[] b = byteArrayOf(2, 0, 0, 2);
+        byte[] expected = byteArrayOf(0, 0, 0, 0);
+
+        byte[] result = BytesAsUInt.add(a, b);
+        Assert.assertTrue("expected:"+bytesToHex(expected)+"; result:"+bytesToHex(result),
+                Arrays.equals(expected, result));
+    }
+
+    public byte[] byteArrayOf(int... literals) {
+        byte[] out = new byte[literals.length];
+        for(int i = 0; i < out.length; i++) {
+            out[i] = (byte)literals[i];
+        }
+        return out;
+    }
+
 
     @Test
     public void testBigInts_longerArrays() {
