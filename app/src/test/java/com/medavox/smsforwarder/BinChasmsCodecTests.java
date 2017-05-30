@@ -24,16 +24,16 @@ public class BinChasmsCodecTests {
     @Test
     public void testEncodeDecode() {
         byte[] data = generateMockPackets(BYTES_PER_TEXT-HEADER_SIZE);
-        //o.println("testData:      "+bytesToHex(data));
-        //o.println("length:"+data.length);
+        o.println("testData:      "+bytesToHex(data));
+        o.println("length:"+data.length);
 
-        String encoded = encode(data);
+        String encoded = encode2(data);
         //check that every character in encoded string is one of gsmChars
 
-        //System.out.println("encoded:"+encoded);
-        byte[] decoded = decode(encoded);
-        //o.println("decoded byte[]:"+bytesToHex(decoded));
-        //o.println("length:"+decoded.length);
+        System.out.println("encoded:"+encoded);
+        byte[] decoded = decode2(encoded);
+        o.println("decoded byte[]:"+bytesToHex(decoded));
+        o.println("length:"+decoded.length);
 
         /*o.println("first input   byte:"+printByteAsBinary(data[0]));
         o.println("last  input   byte:"+printByteAsBinary(data[data.length-1]));
@@ -67,54 +67,6 @@ public class BinChasmsCodecTests {
 
         }
     }*/
-
-    @Test
-    public void test_add() {
-        byte[] a = byteArrayOf(255, 0, 0, 0);
-        System.out.println("a:"+bytesToHex(a));
-        byte[] b = byteArrayOf(255, 0, 0, 0);
-        System.out.println("b:"+bytesToHex(b));
-        byte[] expected = byteArrayOf(254, 1, 0, 0);
-        System.out.println("expected:"+bytesToHex(expected));
-
-        byte[] result = BytesAsUInt.add(a, b);
-        Assert.assertTrue("expected:"+bytesToHex(expected)+"; result:"+bytesToHex(result),
-                Arrays.equals(expected, result));
-    }
-
-    @Test
-    public void test_divide() {
-        byte[] a = byteArrayOf(255, 0, 0, 0);
-        System.out.println("a:"+bytesToHex(a));
-        byte[] b = byteArrayOf(255, 0, 0, 0);
-        System.out.println("b:"+bytesToHex(b));
-        byte[] expected = byteArrayOf(254, 1, 0, 0);
-        System.out.println("expected:"+bytesToHex(expected));
-
-        byte[] result = BytesAsUInt.add(a, b);
-        Assert.assertTrue("expected:"+bytesToHex(expected)+"; result:"+bytesToHex(result),
-                Arrays.equals(expected, result));
-    }
-
-    @Test
-    public void test_subtract() {
-        byte[] a = byteArrayOf(2, 0, 0, 2);
-        System.out.println("a:"+bytesToHex(a));
-        byte[] b = byteArrayOf(2, 0, 0, 2);
-        byte[] expected = byteArrayOf(0, 0, 0, 0);
-
-        byte[] result = BytesAsUInt.add(a, b);
-        Assert.assertTrue("expected:"+bytesToHex(expected)+"; result:"+bytesToHex(result),
-                Arrays.equals(expected, result));
-    }
-
-    public byte[] byteArrayOf(int... literals) {
-        byte[] out = new byte[literals.length];
-        for(int i = 0; i < out.length; i++) {
-            out[i] = (byte)literals[i];
-        }
-        return out;
-    }
 
 
     @Test
