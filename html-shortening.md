@@ -1,4 +1,4 @@
-#HTML Shortening Techniques
+# HTML Shortening Techniques
 
 Things we can do to reversibly shorten the verbose HTML format, before actual compression takes place
 
