@@ -18,8 +18,6 @@ import static com.medavox.util.io.Bytes.bytesToHex;
 public class BytesAsUIntTests {
     private static final int leng = 256 * 256;
 
-
-
     private byte[] genByteArray(int i) {
         byte[] b = new byte[2];
         b[0] = (byte)(i % 256);
@@ -97,7 +95,9 @@ public class BytesAsUIntTests {
                 byte[] a = genByteArray(i);
                 byte[] b = genByteArray(j);
                 byte[] exp = genByteArray(i+j);
-                System.out.println("i:"+i+"; j:"+j);
+                if((j % 1024) == 0) {
+                    System.out.println("i:" + i + "; j:" + j);
+                }
                 byte[] result = BytesAsUInt.add(a, b);
                 Assert.assertTrue("expected:"+bytesToHex(exp)+"; result:"+bytesToHex(result),
                         Arrays.equals(exp, result));
